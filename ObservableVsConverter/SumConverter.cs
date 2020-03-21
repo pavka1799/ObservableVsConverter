@@ -26,7 +26,6 @@ namespace ObservableVsConverter
             //if (0 == collection.Count) return null;
             //CollectionViewGroup cvg = (CollectionViewGroup)collection[0];
             decimal sum = 0;
-            // Double field
             foreach (object o in collection)
             {
                 sum += (decimal)o.GetType().GetProperty(propertyName).GetValue(o);

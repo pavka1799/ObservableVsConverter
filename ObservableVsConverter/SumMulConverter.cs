@@ -27,7 +27,6 @@ namespace ObservableVsConverter
             if (!(values[1] is int)) return null;
             Debug.Print($"ItemCount={(int)values[1]}; Collection Count = {collection.Count}");
             decimal sum = 0;
-            // Double field
             foreach (object o in collection)
             {
                 sum += (decimal)o.GetType().GetProperty(propertyName).GetValue(o);
