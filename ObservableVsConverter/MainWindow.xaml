@@ -6,7 +6,76 @@
         xmlns:local="clr-namespace:ObservableVsConverter"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <local:ViewModel x:Key="VM"/>
+        <local:SumConverter x:Key="sumConverter"/>
+        <local:SumMulConverter x:Key="sumMulConverter"/>
+        <local:YearMonthConverter x:Key="yearMonthConverter"/>
+        <CollectionViewSource x:Key="cvsLines" Source="{Binding Source={StaticResource VM}, Path=LinesRO}"
+                              >
+            <CollectionViewSource.GroupDescriptions>
+                <PropertyGroupDescription PropertyName="AmountDate" Converter="{StaticResource yearMonthConverter}"/>
+            </CollectionViewSource.GroupDescriptions>
+        </CollectionViewSource>
+
+    </Window.Resources>
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <DataGrid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" 
+                  ItemsSource="{Binding Source={StaticResource cvsLines}}"
+                  >
+            <!-- 
+                  ItemsSource="{Binding Source={StaticResource VM}, Path=LinesRO}"
+            -->
+            <DataGrid.GroupStyle>
+                <!-- Style for groups at top level. -->
+                <GroupStyle>
+                    <GroupStyle.ContainerStyle>
+                        <Style TargetType="{x:Type GroupItem}">
+                            <Setter Property="Margin" Value="0,0,0,5"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type GroupItem}">
+                                       
+                                        <Expander IsExpanded="True" Background="#FF112255" BorderBrush="#FF002255" Foreground="#FFEEEEEE" BorderThickness="1,1,1,5">
+                                            <Expander.Header>
+                                                <DockPanel>
+                                                    <TextBlock FontWeight="Bold" Text="{Binding Path=Name}" Margin="5,0,0,0" Width="100"/>
+                                                    <TextBlock FontWeight="Bold" Text="{Binding Path=ItemCount}"/>
+                                                    <TextBlock FontWeight="Bold" Text="Sum: " Margin="5,0,0,0"/>
+                                                    <TextBlock FontWeight="Bold"  >
+                                                        <TextBlock.Text>
+                                                            <!-- 
+                                                            <Binding Path="Items" Converter="{StaticResource sumConverter}" ConverterParameter="AmountValue"/>
+                                                            -->
+                                                            <MultiBinding Converter="{StaticResource sumMulConverter}" ConverterParameter="AmountValue" StringFormat="{}{0:N2}">
+                                                                <Binding Path="Items"/>
+                                                                <Binding Path="ItemCount"/>
+                                                            </MultiBinding>
+                                                        </TextBlock.Text>
+                                                    </TextBlock>
+                                                </DockPanel>
+                                            </Expander.Header>
+                                            <Expander.Content>
+                                                <ItemsPresenter />
+                                            </Expander.Content>
+                                        </Expander>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </GroupStyle.ContainerStyle>
+                </GroupStyle>
+            </DataGrid.GroupStyle>
+
+        </DataGrid>
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <Button Height="20" Width="50" Click="Button_Click">
+                Add
+            </Button>
+        </StackPanel>
     </Grid>
 </Window>

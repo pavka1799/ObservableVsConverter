@@ -16,34 +16,39 @@ namespace ObservableVsConverter
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private DateTime _dateOne;
-        public DateTime DateOne
+        private DateTime _amountDate;
+        public DateTime AmountDate
         {
-            get { return _dateOne; }
+            get { return _amountDate; }
             set
             {
-                if (_dateOne != value)
+                if (_amountDate != value)
                 {
-                    _dateOne = value;
-                    NotifyPropertyChanged(nameof(DateOne));
+                    _amountDate = value;
+                    NotifyPropertyChanged(nameof(AmountDate));
                 } 
             }
         }
 
-        private decimal _cost;
-        public decimal Cost
+        private decimal _amountValue;
+        public decimal AmountValue
         {
-            get { return _cost; }
+            get { return _amountValue; }
             set
             {
-                if (_cost != value)
+                if (_amountValue != value)
                 {
-                    _cost = value;
-                    NotifyPropertyChanged(nameof(Cost));
+                    _amountValue = value;
+                    NotifyPropertyChanged(nameof(AmountValue));
                 }
             }
         }
 
+        public LineItem(DateTime date, decimal value)
+        {
+            _amountDate = date;
+            _amountValue = value;
+        }
 
     }
 }

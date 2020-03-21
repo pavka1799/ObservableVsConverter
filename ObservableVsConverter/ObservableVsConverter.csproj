@@ -55,6 +55,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="SumConverter.cs" />
+    <Compile Include="SumMulConverter.cs" />
+    <Compile Include="ViewModel.cs" />
+    <Compile Include="YearMonthConverter.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
